@@ -3,11 +3,7 @@
 Adds [Tavily](https://tavily.com)'s AI-native web search to
 [Spora](https://github.com/spora-ai/spora) agents — search the web and
 receive an LLM-optimised answer plus ranked source results in one tool
-call. Tavily is a paid API; a free tier with **1,000 credits/month** is
-available.
-
-Sign up and get an API key at <https://tavily.com> (no credit card
-required for the free tier).
+call. A free tier is available.
 
 ## Installation
 
@@ -43,7 +39,7 @@ The plugin ships **one** tool, `tavily_search`. It calls Tavily's
 | Parameter | Type | Required | Default | Notes |
 |---|---|---|---|---|
 | `query` | string | yes | — | The exact research question or search query. |
-| `search_depth` | string | no | `basic` | `basic` or `advanced`. Advanced takes longer but traverses deeper (1 credit vs 2 credits per call). |
+| `search_depth` | string | no | `basic` | `basic` or `advanced`. Advanced traverses deeper but takes longer. |
 
 ### What it returns
 
@@ -81,25 +77,14 @@ set (`topic`, `max_results`, `include_raw_content`, `time_range`,
 Exposing them as agent-callable arguments is out of scope for v1; if you
 need a knob, open an issue.
 
-## Tavily account, pricing, and limits
+## Tavily account
 
-| Tier | Price | Credits / month |
-|---|---|---|
-| **Researcher** (free) | $0 | 1,000 — no credit card required |
-| **Pay As You Go** | $0.008 / credit | metered |
-| **Project** | starts at 4,000 credits/mo | higher rate limits |
-| **Enterprise** | custom | custom API calls, SLAs |
-
-Credit cost: a `basic` `/search` call costs **1 credit**, `advanced`
-costs **2 credits**. Plan / rate-limit errors come back as HTTP
-`429` / `432` / `433` and surface as `ToolResult::fail` with the status
-code embedded.
-
-- Sign up: <https://tavily.com> → "Try it for free"
-- API key: <https://app.tavily.com/home>
-- Pricing: <https://tavily.com/pricing>
+- Sign up: <https://tavily.com>
+- API key dashboard: <https://app.tavily.com/home>
 - API reference: <https://docs.tavily.com>
-- Status page / support: <https://docs.tavily.com>
+
+Rate-limit / plan errors come back as HTTP `429` / `432` / `433` and
+surface as `ToolResult::fail` with the status code embedded.
 
 ## Development
 
