@@ -12,25 +12,12 @@ required for the free tier).
 ## Installation
 
 ```bash
-# Recommended — install via the Spora CLI
 php bin/spora plugin:install spora-ai/spora-plugin-tavily
-php bin/spora spora:install   # applies the plugin's migration
-
-# For development against a sibling git clone, pass --path:
-php bin/spora plugin:install spora-ai/spora-plugin-tavily --path=/abs/path/to/checkout
-
-# Alternative — drop a clone into the Spora repo
-git clone https://github.com/spora-ai/spora-plugin-tavily.git plugins/tavily
-php bin/spora spora:install
-
-# Alternative — external path (no Spora checkout changes)
-git clone https://github.com/spora-ai/spora-plugin-tavily.git /opt/spora-plugins/tavily
-echo 'SPORA_PLUGINS_PATHS=/opt/spora-plugins/tavily' >> .env
-php bin/spora spora:install
 ```
 
-After install, the tool is exposed as `tavily_search` (visible in
-`php bin/spora plugin:list` and the agent UI under Tools).
+For local development against a sibling checkout, pass `--path=/abs/path/to/checkout`.
+
+After install, the tool is exposed as `tavily_search` (visible in `php bin/spora plugin:list` and the agent UI under Tools).
 
 ## Configuration
 
