@@ -3,5 +3,5 @@
   "slug": "tavily",
   "description": "Tavily web search for Spora agents.",
   "class": "Spora\\Plugins\\Tavily\\TavilyPlugin",
-  "icon": "puzzle"
+  "icon": "search"
 }
