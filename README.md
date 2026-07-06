@@ -22,8 +22,8 @@ against `https://api.tavily.com`.
 
 | Setting | Required | Default |
 |---|---|---|
-| `core.tavily.api_key` | yes | — |
-| `core.tavily.http_timeout` | no | `30` (seconds; overridden by `SPORA_TOOL_HTTP_TIMEOUT` env var) |
+| `api_key` | yes | — |
+| `http_timeout` | no | `30` (seconds; overridden by `SPORA_TOOL_HTTP_TIMEOUT` env var) |
 
 `api_key` is encrypted at rest by Spora's `ToolConfigService`, masked in
 the UI, and never logged (the `api_key` field in outbound payload logs

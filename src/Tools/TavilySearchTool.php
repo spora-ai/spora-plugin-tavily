@@ -27,14 +27,14 @@ use Throwable;
 )]
 #[ToolOperation(name: 'search', description: 'Search the web using Tavily AI', enabledByDefault: true, requiresApprovalByDefault: false)]
 #[ToolSetting(
-    key: 'core.tavily.api_key',
+    key: 'api_key',
     label: 'Tavily API Key',
     type: 'password',
     description: 'API key for api.tavily.com/search (Optimized for LLMs)',
     required: true,
 )]
 #[ToolSetting(
-    key: 'core.tavily.http_timeout',
+    key: 'http_timeout',
     label: 'HTTP Timeout',
     type: 'text',
     description: 'Seconds before an HTTP request fails (default: 30)',
@@ -62,8 +62,8 @@ final class TavilySearchTool extends AbstractTool
 
     private function effectiveTimeout(array $settings): int
     {
-        if (isset($settings['core.tavily.http_timeout']) && (int) $settings['core.tavily.http_timeout'] > 0) {
-            return (int) $settings['core.tavily.http_timeout'];
+        if (isset($settings['http_timeout']) && (int) $settings['http_timeout'] > 0) {
+            return (int) $settings['http_timeout'];
         }
         $envTimeout = (int) ($_ENV['SPORA_TOOL_HTTP_TIMEOUT'] ?? getenv('SPORA_TOOL_HTTP_TIMEOUT') ?: 0);
         return $envTimeout > 0 ? $envTimeout : 30;
@@ -91,7 +91,7 @@ final class TavilySearchTool extends AbstractTool
         }
 
         $settings = $this->configService->getEffectiveSettings(static::class, $agentId, $userId);
-        $apiKey = $settings['core.tavily.api_key'] ?? '';
+        $apiKey = $settings['api_key'] ?? '';
 
         try {
             return $this->performTavilySearch($query, $searchDepth, $apiKey, $this->effectiveTimeout($settings));
@@ -108,7 +108,7 @@ final class TavilySearchTool extends AbstractTool
         }
 
         $settings = $this->configService->getEffectiveSettings(static::class, $agentId, $userId);
-        $apiKey = $settings['core.tavily.api_key'] ?? '';
+        $apiKey = $settings['api_key'] ?? '';
         if (empty($apiKey)) {
             return new ToolResult(false, 'Tavily API key is not configured for this agent. Please edit the Tavily Search settings.');
         }
