@@ -70,6 +70,9 @@ final class TavilySearchTool extends AbstractTool
         return $envTimeout > 0 ? $envTimeout : 30;
     }
 
+    /**
+     * @deprecated 1.0 pass $context->ownerUserId instead; removed from the interface in core 0.30.0.
+     */
     public function execute(
         array $arguments,
         int $agentId,
@@ -77,7 +80,9 @@ final class TavilySearchTool extends AbstractTool
         ?int $taskId = null,
         ?PrincipalContext $context = null,
     ): ToolResult {
-        return $this->search($arguments, $agentId, $userId);
+        $ownerId = $context?->ownerUserId;
+
+        return $this->search($arguments, $agentId, $ownerId);
     }
 
     public function describeAction(array $arguments): string

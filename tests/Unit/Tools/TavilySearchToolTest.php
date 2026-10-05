@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use Psr\Log\LoggerInterface;
+use Spora\Models\Principal;
 use Spora\Plugins\Tavily\Tools\TavilySearchTool;
+use Spora\Services\PrincipalContext;
 use Spora\Services\ToolConfigService;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -77,4 +79,16 @@ it('handles http error codes gracefully', function () {
     $result = $tool->execute(['query' => 'apple'], 1);
     expect($result->success)->toBeFalse()
         ->and($result->content)->toContain('HTTP 500');
+});
+
+it('resolves the settings owner from the principal context, not the legacy user id', function () {
+    $config = Mockery::mock(ToolConfigService::class);
+    $config->allows('getEffectiveSettings')->with(TavilySearchTool::class, 1, 99)->andReturn([]);
+    $client = Mockery::mock(HttpClientInterface::class);
+    $tool = new TavilySearchTool($config, $client);
+
+    $context = new PrincipalContext(7, Principal::TYPE_USER, 99, 99);
+    $result = $tool->execute(['query' => 'apple'], 1, 4242, null, $context);
+
+    expect($result->content)->toContain('API key is not configured');
 });
