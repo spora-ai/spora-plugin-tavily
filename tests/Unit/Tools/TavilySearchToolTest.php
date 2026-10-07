@@ -88,7 +88,7 @@ it('resolves the settings owner from the principal context, not the legacy user 
     $tool = new TavilySearchTool($config, $client);
 
     $context = new PrincipalContext(7, Principal::TYPE_USER, 99, 99);
-    $result = $tool->execute(['query' => 'apple'], 1, 4242, null, $context);
+    $result = $tool->execute(['query' => 'apple'], 1, null, $context);
 
     expect($result->content)->toContain('API key is not configured');
 });
